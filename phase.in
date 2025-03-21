@@ -1,0 +1,54 @@
+clear
+variable f loop 0 180
+label loopf
+clear
+log log-Al-NiAl3-$f.lammps
+variable a loop 1 # 51
+label loop
+clear
+variable b equal ($a+4)*0.01*4.046
+units metal
+atom_style atomic
+dimension 3
+boundary p p p
+region total block 0 200 0 200 0 200 units box
+create_box 2 total
+read_data Al-NiAl3-$f-s.lmp add append
+pair_style eam/alloy
+pair_coeff * * Mishin-Ni-Al-2009.eam.alloy Al Ni
+region upper block 0 200 0 200 100 200
+region lower block 0 200 0 200 0 100
+region sphere sphere 100 100 100 90
+region Al intersect 2 sphere upper
+region NiAl3 intersect 2 sphere lower
+delete_atoms overlap $b all all
+group sphere region sphere
+group Al region Al
+group NiAl3 subtract all Al
+neighbor 2.0 bin
+neighbor modify delay 10 check yes
+timestep 0.01
+compute eng sphere pe/atom
+compute eatoms sphere reduce sum c_eng
+compute types_Al Al count/type atom
+compute types_NiAl3 NiAl3 count/type atom
+variable ntypes_Al vector c_types_Al
+variable ntypes_NiAl3 vector c_types_NiAl3
+thermo_style custom step pe lx ly lz press pxx pyy pzz c_eatoms v_ntypes_Al[*2] v_ntypes_NiAl3[*2]
+thermo 100
+min_style cg
+minimize 1.0e-15 1.0e-15 5000 5000
+variable E equal "c_eatoms"
+variable n equal "count(sphere)"
+variable n_Al equal "c_types_Al[1]"
+variable n_NiAl3_Al equal "c_types_NiAl3[1]"
+variable n_NiAl3_Ni equal "c_types_NiAl3[2]"
+print "b = $b;"
+print "Total energy (eV) = ${E};"
+print "Total number of atoms in sphere = ${n};"
+print "Number of atoms in Al = ${n_Al};"
+print "Number of Al in NiAl3 = ${n_NiAl3_Al}, number of Ni in NiAl3 = ${n_NiAl3_Ni}."
+next a
+jump SELF loop
+next f
+jump SELF loopf
