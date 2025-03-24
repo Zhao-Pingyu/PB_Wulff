@@ -6,6 +6,10 @@ from natsort import natsorted
 import matplotlib.pyplot as plt
 
 def get_energy():
+    """
+    Function for calculating the phase boundary energies of the different boundary plane inclinations
+    """    
+    
     E_Al = -3.81685565877244 # average per-atom energy of Al in perfect Al3Ni ortho (eV), two types -3.84109*1,-3.80474*2
     E_Ni = -4.03275843383911 # per-atom energy of Ni in perfect Al3Ni (eV)
     A = 80**2 # sphere phase boundary area (angstrom^2)
@@ -45,6 +49,9 @@ def get_energy():
     return PBE_min
 
 def get_full_range(PBE_min):
+    """
+    Function for obtaining the full range of boundary plane inclinations (0-360 degrees) through crystal symmetry
+    """
     deg = np.arange(0,361)
     En = np.zeros_like(deg)
     for i in range(0,361):
@@ -55,6 +62,10 @@ def get_full_range(PBE_min):
     return En
         
 def plot_wulff(En):
+    """
+    Function for Wulff shape construction
+    """
+    
     fi = np.arange(0,361)
     r = En*20
     x = r*np.cos(fi*np.pi/180)
@@ -93,4 +104,3 @@ if __name__=="__main__":
     PBE_min = get_energy()
     En = get_full_range(PBE_min)
     plot_wulff(En)
-    os.chdir('..')
