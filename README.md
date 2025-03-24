@@ -21,3 +21,5 @@ Pierre Hirel, Comput. Phys. Comm. 197 (2015) 212-219) for constructing bicrystal
 *data.py*: makes adjustments to the intermediate files that contain errors
 
 *adjust.sh*: makes adjustments to the final bicrystal structures that contain errors
+
+The files are to be executed in the order that they are listed.
