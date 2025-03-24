@@ -1,5 +1,6 @@
 # PB_Wulff
-The PB_Wulff package constructs the Wulff shapes of Al-Al3Ni phase boundaries based on Euler angles measured by Electron Backscatter Diffraction (EBSD). It integrates Atomsk for constructing bicrystal structures containing grain boundaries, and LAMMPS for performing atomistic simulations to determine grain boundary energy. The code for Wulff shape construction is built upon the implementation by termistotel: https://github.com/termistotel/Wulff-constructions.
+The PB_Wulff package constructs the Wulff shapes of Al-Al3Ni phase boundaries based on Euler angles measured by Electron Backscatter Diffraction (EBSD). It integrates Atomsk ("Atomsk: A tool for manipulating and converting atomic data files"
+Pierre Hirel, Comput. Phys. Comm. 197 (2015) 212-219) for constructing bicrystal structures containing grain boundaries, and LAMMPS for performing atomistic simulations to determine grain boundary energy. The code for Wulff shape construction is built upon the implementation by termistotel: https://github.com/termistotel/Wulff-constructions.
 
 **Files:**
 
